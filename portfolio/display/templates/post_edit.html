@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Post</title>
+    {% load static %}
+        <link rel="stylesheet" href="{% static "display/style.css" %}" type="text/css">
+</head>
+<body>
+{% if user.is_authenticated %}
+    <p>Authenticated as {{ user.get_username }}.</p>
+{% endif %}
+<div id="contents"><div class="main">
+    <h1>New Post</h1>
+    <form action="/portfolio/post_new/" method="post" class="message">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit">
+</form>
+    </div></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Post_Show</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static "display/style.css" %}" type="text/css">
+    </head>
+    <body>
+{% if user.is_authenticated %}
+    <p>Authenticated as {{ user.get_username }}.</p>
+{% endif %}
+
+
+    <div id="contents"><div class="main">
+    <h1>The Posts</h1>
+    <ul class="news">
+    {% for p in post %}
+    <li>
+    <h2> {{ p.title}}</h2>
+    <p> {{ p.content}}</p>
+    <p><b> {{ p.author}}</b> on {{ p.date}}</p>
+
+    </li>
+    {% endfor %}
+    </ul>
+    </div> </div>
+    </body>
+    </html>

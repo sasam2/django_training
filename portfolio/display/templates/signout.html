@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign out</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static "display/style.css" %}" type="text/css">
+</head>
+<body>
+
+{% if user.is_authenticated %}
+    <p>Authenticated as {{ user.get_username }}.</p>
+{% endif %}
+<div id="contents"><div class="main">
+<h1>Sign out</h1>
+<p>Sign out?</p>
+    <form action="/portfolio/signout/" method="post" class="message">
+        {% csrf_token %}
+    <input type="submit" value="Sign out">
+    </form>
+</div></div>
+</body>
+</html>
