@@ -14,12 +14,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib import auth
 
+from django.core.files.storage import FileSystemStorage
+
 # Create your views here.
 from django.http import HttpResponse
 
 
 def post_show(request):
-    post = Post.objects.order_by('date')
+    post = Post.objects.order_by('-date')
     request.session['foo'] = 'bar'
     return render(request, 'post_show.html', {'post': post})
 
@@ -29,13 +31,18 @@ def post_new(request):
 
     if request.method == 'POST':
         form = PosteditForm(request.POST)
-        if form.is_valid():
-            p = Post(title=form.cleaned_data['title'],
-                     content=form.cleaned_data['content'],
-                     author=request.user.get_username())
-            p.save()
-            # redirect to a new URL:
-            return HttpResponseRedirect('/portfolio/')
+        photo = request.FILES['image']
+        #fs=FileSystemStorage()
+        #filename = fs.save(photo.name, photo)
+        form.is_valid()
+        p = Post(title=form.cleaned_data['title'],
+                 content=form.cleaned_data['content'],
+                 author=request.user.get_username(),
+                 photo=request.FILES['image'])
+        p.save()
+
+        # redirect to a new URL:
+        return HttpResponseRedirect('/portfolio/')
 
     # if a GET (or any other method) we'll create a blank form
     form = PosteditForm()

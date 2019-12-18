@@ -7,12 +7,14 @@
         <link rel="stylesheet" href="{% static "display/style.css" %}" type="text/css">
 </head>
 <body>
-{% if user.is_authenticated %}
-    <p>Authenticated as {{ user.get_username }}.</p>
+
+<div id="contents">
+    <div class="main">
+         {% if user.is_authenticated %}
+            <p align="right">Authenticated as <b>{{ user.get_username }}</b>.</p>
 {% endif %}
-<div id="contents"><div class="main">
     <h1>New Post</h1>
-    <form action="/portfolio/post_new/" method="post" class="message">
+    <form action="/portfolio/post_new/" method="post" class="message" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
     {{ form.as_table }}

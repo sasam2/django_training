@@ -10,3 +10,4 @@ class Post(models.Model):
     content = models.TextField()
     author = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
+    photo = models.ImageField(upload_to="gallery", blank=True)

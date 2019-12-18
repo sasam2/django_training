@@ -8,10 +8,10 @@
 </head>
 <body>
 
-{% if user.is_authenticated %}
-    <p>Authenticated as {{ user.get_username }}.</p>
-{% endif %}
 <div id="contents"><div class="main">
+    {% if user.is_authenticated %}
+    <p align="right">Authenticated as {{ user.get_username }}.</p>
+{% endif %}
 <h1>Sign out</h1>
 <p>Sign out?</p>
     <form action="/portfolio/signout/" method="post" class="message">

@@ -7,10 +7,10 @@
         <link rel="stylesheet" href="{% static "display/style.css" %}" type="text/css">
 </head>
 <body>
-{% if user.is_authenticated %}
-    <p>Authenticated as {{ user.get_username }}.</p>
-{% endif %}
 <div id="contents"><div class="main">
+    {% if user.is_authenticated %}
+    <p align="right">Authenticated as {{ user.get_username }}.</p>
+{% endif %}
 <h1>Sign up</h1>
     <form action="/portfolio/signup/" method="post" class="message">
     {% csrf_token %}

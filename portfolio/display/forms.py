@@ -4,7 +4,7 @@ class PosteditForm(forms.Form):
 
     title = forms.CharField(label='Title')
     content = forms.CharField(label='Content', widget=forms.Textarea())
-
+    image = forms.ImageField(label='Image')
 
 class SignupForm(forms.Form):
 

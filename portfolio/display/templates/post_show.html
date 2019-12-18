@@ -6,17 +6,22 @@
         <link rel="stylesheet" href="{% static "display/style.css" %}" type="text/css">
     </head>
     <body>
-{% if user.is_authenticated %}
-    <p>Authenticated as {{ user.get_username }}.</p>
+
+
+
+    <div id="contents">
+        <div class="main">
+                    {% if user.is_authenticated %}
+            <p align="right">Authenticated as <b>{{ user.get_username }}</b>.</p>
 {% endif %}
-
-
-    <div id="contents"><div class="main">
     <h1>The Posts</h1>
     <ul class="news">
     {% for p in post %}
     <li>
     <h2> {{ p.title}}</h2>
+        {% if p.photo %}
+        <img src="{{ p.photo.url }}">
+        {% endif %}
     <p> {{ p.content}}</p>
     <p><b> {{ p.author}}</b> on {{ p.date}}</p>
 
