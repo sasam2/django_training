@@ -9,7 +9,7 @@
 <body>
 <div id="contents"><div class="main">
     {% if user.is_authenticated %}
-    <p align="right">Authenticated as {{ user.get_username }}.</p>
+    <p align="right">Authenticated as <b><a href="portfolio/signout">{{ user.get_username }}</a></b>.</p>
 {% endif %}
 <h1>Sign in</h1>
     <form action="/portfolio/signin/" method="post" class="message">

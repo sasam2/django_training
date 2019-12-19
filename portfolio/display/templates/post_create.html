@@ -11,10 +11,10 @@
 <div id="contents">
     <div class="main">
          {% if user.is_authenticated %}
-            <p align="right">Authenticated as <b>{{ user.get_username }}</b>.</p>
+            <p align="right">Authenticated as <b><a href="portfolio/signout">{{ user.get_username }}</a></b>.</p>
 {% endif %}
     <h1>New Post</h1>
-    <form action="/portfolio/post_new/" method="post" class="message" enctype="multipart/form-data">
+    <form action="/portfolio/post_create/" method="post" class="message" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
     {{ form.as_table }}

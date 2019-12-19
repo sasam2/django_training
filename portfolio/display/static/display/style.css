@@ -149,9 +149,10 @@ img {
 #contents {
 	min-height: 510px;
 	width: 880px;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 	padding: 54px 40px;
 }
+
 h1 {
 	color: #3e3e3e;
 	font-size: 30px;

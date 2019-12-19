@@ -10,7 +10,7 @@
 
 <div id="contents"><div class="main">
     {% if user.is_authenticated %}
-    <p align="right">Authenticated as {{ user.get_username }}.</p>
+    <p align="right">Authenticated as <b><a href="portfolio/signout">{{ user.get_username }}</a></b>.</p>
 {% endif %}
 <h1>Sign out</h1>
 <p>Sign out?</p>

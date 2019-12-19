@@ -20,12 +20,12 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 
 
-def post_show(request):
+def post_view(request):
     post = Post.objects.order_by('-date')
     request.session['foo'] = 'bar'
-    return render(request, 'post_show.html', {'post': post})
+    return render(request, 'post_view.html', {'post': post})
 
-def post_new(request):
+def post_create(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect('/portfolio/signin/')
 
@@ -37,7 +37,7 @@ def post_new(request):
         form.is_valid()
         p = Post(title=form.cleaned_data['title'],
                  content=form.cleaned_data['content'],
-                 author=request.user.get_username(),
+                 author=request.user,
                  photo=request.FILES['image'])
         p.save()
 
@@ -46,7 +46,18 @@ def post_new(request):
 
     # if a GET (or any other method) we'll create a blank form
     form = PosteditForm()
-    return render(request, 'post_edit.html', {'form': form, 'user': request.user})
+    return render(request, 'post_create.html', {'form': form, 'user': request.user})
+
+def post_delete(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/portfolio/signin/')
+
+    if request.method == 'POST':
+        p = Post.objects.get(id = request.POST['post_id'])
+        if p.author == request.user:
+            p.delete()
+
+    return HttpResponseRedirect('/portfolio/')
 
 
 def signup(request):
@@ -91,3 +102,10 @@ def signout(request):
         return HttpResponseRedirect('/portfolio/')
 
     return render(request, 'signout.html')
+
+
+
+
+
+
+

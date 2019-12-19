@@ -12,7 +12,7 @@
     <div id="contents">
         <div class="main">
                     {% if user.is_authenticated %}
-            <p align="right">Authenticated as <b>{{ user.get_username }}</b>.</p>
+            <p align="right">Authenticated as <b><a href="portfolio/signout">{{ user.get_username }}</a></b>.</p>
 {% endif %}
     <h1>The Posts</h1>
     <ul class="news">
@@ -22,9 +22,18 @@
         {% if p.photo %}
         <img src="{{ p.photo.url }}">
         {% endif %}
+    <p/>
     <p> {{ p.content}}</p>
-    <p><b> {{ p.author}}</b> on {{ p.date}}</p>
-
+    <p><b> {{ p.author.get_username }}</b> on {{ p.date}}</p>
+     {% if user.is_authenticated %}
+        {% ifequal user p.author %}
+         <form action="/portfolio/post_delete/" method="post" class="message">
+        {% csrf_token %}
+             <input type="hidden" name="post_id" value="{{p.id}}">
+             <input type="submit" value="Delete">
+         </form>
+        {% endifequal %}
+     {% endif %}
     </li>
     {% endfor %}
     </ul>
