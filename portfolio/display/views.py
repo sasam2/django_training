@@ -42,7 +42,7 @@ def post_create(request):
         p.save()
 
         # redirect to a new URL:
-        return HttpResponseRedirect('/portfolio/')
+        return HttpResponseRedirect('/portfolio/post_view/')
 
     # if a GET (or any other method) we'll create a blank form
     form = PosteditForm()
@@ -57,7 +57,7 @@ def post_delete(request):
         if p.author == request.user:
             p.delete()
 
-    return HttpResponseRedirect('/portfolio/')
+    return HttpResponseRedirect('/portfolio/post_view/')
 
 
 def signup(request):
@@ -87,7 +87,7 @@ def signin(request):
             if user is not None :
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
-                return HttpResponseRedirect('/portfolio/')
+                return HttpResponseRedirect('/portfolio/post_view/')
 
     # if a GET (or any other method) we'll create a blank form
     form = SignupForm()
@@ -99,7 +99,7 @@ def signout(request):
 
     if request.method == 'POST':
         auth.logout(request)
-        return HttpResponseRedirect('/portfolio/')
+        return HttpResponseRedirect('/portfolio/post_view/')
 
     return render(request, 'signout.html')
 
