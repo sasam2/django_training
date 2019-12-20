@@ -22,10 +22,10 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 
 def post_view(request):
-    first_post = request.GET.get('lastPost')
-    print first_post
-    if first_post:
-        posts = Post.objects.filter(id__gt=first_post).order_by('-date')[:2]
+    lastPost = request.GET.get('lastPost')
+    print lastPost
+    if lastPost:
+        posts = Post.objects.filter(id__lt=lastPost).order_by('-date')[:2]
         data = serializers.serialize("json", posts)
         return JsonResponse(data, safe=False)
 
