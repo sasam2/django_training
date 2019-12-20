@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 
 from .forms import SignupForm, PosteditForm
 
@@ -14,15 +14,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib import auth
 
+from django.core import serializers
+
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 from django.http import HttpResponse
 
-
 def post_view(request):
-    post = Post.objects.order_by('-date')
-    request.session['foo'] = 'bar'
+    first_post = request.GET.get('lastPost')
+    print first_post
+    if first_post:
+        posts = Post.objects.filter(id__gt=first_post).order_by('-date')[:2]
+        data = serializers.serialize("json", posts)
+        return JsonResponse(data, safe=False)
+
+    # request.session['foo'] = 'bar'
+    post = Post.objects.order_by('-date')[:2]
     return render(request, 'post_view.html', {'post': post})
 
 def post_create(request):

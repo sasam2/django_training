@@ -27,7 +27,7 @@
     <p><b> {{ p.author.get_username }}</b> on {{ p.date}}</p>
      {% if user.is_authenticated %}
         {% ifequal user p.author %}
-         <form action="/portfolio/post_delete/" method="post" class="message">
+         <form action="/portfolio/post_delete/" method="post" class="message" onsubmit="return confirm('Do you really want to delete post {{p.title}}?');">
         {% csrf_token %}
              <input type="hidden" name="post_id" value="{{p.id}}">
              <input type="submit" value="Delete">
@@ -37,6 +37,20 @@
     </li>
     {% endfor %}
     </ul>
+            <p id="demo"></p>
+            <button type="button" onclick="loadDoc()">Load More</button>
+            <script>
+            function loadDoc() {
+              var xhttp = new XMLHttpRequest();
+              xhttp.onreadystatechange = function() {
+                if(this.readyState==4 && this.status==200)
+                  document.getElementById("demo").innerHTML = "hello" +" "+this.responseText;
+
+              };
+              xhttp.open('GET', 'portfolio/post_view?lastPost=4', true);
+              xhttp.send();
+            }
+            </script>
     </div> </div>
     </body>
     </html>
