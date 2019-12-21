@@ -23,7 +23,7 @@
     <img src="{{ p.photo.url }}">
     {% endif %}
     <p> {{ p.content}}</p>
-    <p><b> {{ p.author.get_username }}</b> on {{ p.date}}</p>
+    <p><b> {{ p.author.get_username }}</b> on {{ p.date }}</p>
      {% if user.is_authenticated %}
         {% ifequal user p.author %}
         <form action="/portfolio/post_delete/" method="post" class="message" onsubmit="return confirm('Do you really want to delete post {{p.title}}?');">
@@ -35,14 +35,12 @@
      {% endif %}
     </li>
     {% endfor %}
-        <!-- TODO dinamically choose parameter lastPost on ajax -->
-        <!-- TODO put delete button on ajax loaded posts -->
-        <!-- TODO replace author id by name on ajax loaded posts -->
+        <!-- TODO correct date format on ajax loaded posts -->
     </ul>
-            <button type="button" onclick="loadDoc()">Load More</button>
+            <button type="button" onclick="loadPosts('{{ user.get_username }}')">Load More</button>
             <p id="demo"></p>
             <script>
-            function loadDoc() {
+            function loadPosts(username) {
               var xhttp = new XMLHttpRequest();
               xhttp.onreadystatechange = function() {
                 if(this.readyState==4 && this.status==200){
@@ -52,28 +50,44 @@
                     var html="";
                     var posts=JSON.parse(JSON.parse( this.responseText));
                     for (var i=0; i < posts.length; i++){
-                        html += "<li id=" + posts[i].pk + ">";
-                        html += "<h2>" + posts[i].fields['title']+"</h2>";
-                        if(posts[i].fields['photo']!=null){
-                            html += "<img src=\"\\media\\" + posts[i].fields['photo']+"\">";
+                        html += "<li id=" + posts[i]['id'] + ">";
+                        html += "<h2>" + posts[i]['title']+"</h2>";
+                        if(posts[i]['photo']!=null){
+                            html += "<img src=\"\\media\\" + posts[i]['photo']+"\">";
                         }
-                        html += "<p>" + posts[i].fields['content']+" </p>";
-                        html += "<p><b>" + posts[i].fields['author']+"</b> on "+posts[i].fields['date']+" </p>";
+                        html += "<p>" + posts[i]['content']+" </p>";
+                        html += "<p><b>" + posts[i]['author']+"</b> on "+posts[i]['date']+" </p>";
+
+                        if (posts[i]['author']==username ){
+                             html += "<form action=\"/portfolio/post_delete/\" method=\"post\" class=\"message\" onsubmit=\"return confirm('Do you really want to delete post"+posts[i]['title']+"?');\">";
+                             csrftoken = getCookie('csrftoken');
+                             html += "<input type='hidden' name='csrfmiddlewaretoken' value='"+csrftoken+"'/><input type=\"\hidden\" name=\"post_id\" value=\""+posts[i]['id']+"\"><input type=\"submit\" value=\"Delete\"></form>";
+                        }
                     }
                     document.getElementById("posts").innerHTML += html;
                 }
               };
               var postElems = document.getElementById("posts").getElementsByTagName("li");
-              var minId=Number.MAX_VALUE;
-              for(var i= postElems.length-1; i >= 0; i--){
-                pId=Number(postElems[i].id);
-                if(pId < minId){
-                    minId = pId ;
-                }
-              }
+              var minId=Number(postElems[postElems.length-1].id);
+              document.getElementById("demo").innerHTML += "</br>"+minId+"</br>"
               xhttp.open('GET', 'portfolio/post_view?lastPost='+minId, true);
               xhttp.send();
-            }
+            };
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            };
             </script>
     </div> </div>
     </body>

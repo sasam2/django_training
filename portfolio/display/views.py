@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate
 from django.contrib import auth
+import json
 
 from django.core import serializers
 
@@ -23,14 +24,21 @@ from django.http import HttpResponse
 
 def post_view(request):
     lastPost = request.GET.get('lastPost')
-    print lastPost
     if lastPost:
-        posts = Post.objects.filter(id__lt=lastPost).order_by('-date')[:2]
-        data = serializers.serialize("json", posts)
-        return JsonResponse(data, safe=False)
+        posts = list(Post.objects.select_related('author').filter(id__lt=lastPost).order_by('-date')[:2].values())
+        for p in posts:
+            author_id = p.pop('author_id')
+            p['author'] = User.objects.get(id=author_id).username
+            date = p.pop('date')
+            p['date'] = str(date)
+        resp = json.dumps(posts)
+        #print resp
+        #data = serializers.serialize("json", posts)
+        return JsonResponse(resp, safe=False)
 
     # request.session['foo'] = 'bar'
-    post = Post.objects.order_by('-date')[:2]
+    post = Post.objects.select_related('author').order_by('-date')[:2]
+    print 'posts ', post[0].author
     return render(request, 'post_view.html', {'post': post})
 
 def post_create(request):
