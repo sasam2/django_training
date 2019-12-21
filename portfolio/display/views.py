@@ -15,6 +15,9 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 import json
 
+# Import Datetime
+from datetime import datetime
+
 from django.core import serializers
 
 from django.core.files.storage import FileSystemStorage
@@ -30,7 +33,7 @@ def post_view(request):
             author_id = p.pop('author_id')
             p['author'] = User.objects.get(id=author_id).username
             date = p.pop('date')
-            p['date'] = str(date)
+            p['date'] = date.strftime("%Y-%m-%d %H:%M:%S")
         resp = json.dumps(posts)
         #print resp
         #data = serializers.serialize("json", posts)
