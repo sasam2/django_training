@@ -149,7 +149,7 @@ img {
 #contents {
 	min-height: 510px;
 	width: 880px;
-	/*margin: 0 auto;*/
+	margin: 0 auto;
 	padding: 54px 40px;
 }
 
@@ -238,7 +238,7 @@ p a {
 	background: url(../images/divider.png) repeat-y right top;
 	min-height: 100px;
 	width: 620px;
-	/**padding-right: 24px;**/
+	padding-right: 24px;
 }
 .main h1, .sidebar h1 {
 	margin: 0 0 12px;
@@ -263,7 +263,7 @@ p a {
 }
 .news li {
 	border-top: 1px solid #d5d5d5;
-	padding: 24px 0px; /**24px;  30px; 0 100px;**/
+	padding: 24px 30p; 0 100px;
 	position: relative;
 }
 .news li .date {
@@ -421,4 +421,20 @@ p a {
 }
 #connect a.tumbler:hover {
 	background-position: -40px -120px;
+}
+.floating-menu {
+    font-family: sans-serif;
+    background: #818181;
+    padding: 5px;;
+    width: 130px;
+    z-index: 100;
+    position: fixed;
+    float: right;
+  }
+.floating-menu a,
+.floating-menu h3 {
+    font-size: 0.9em;
+    display: block;
+    margin: 0 0.5em;
+    color: white;
 }
