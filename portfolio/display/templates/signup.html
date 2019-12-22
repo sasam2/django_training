@@ -1,24 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign up</title>
-    {% load static %}
-        <link rel="stylesheet" href="{% static "display/style.css" %}" type="text/css">
-</head>
-<body>
-<div id="contents"><div class="main">
-    {% if user.is_authenticated %}
-    <p align="right">Authenticated as <b><a href="portfolio/signout">{{ user.get_username }}</a></b>.</p>
-{% endif %}
+{% extends "base.html" %}
+
+{% block title %}Sign out{% endblock %}
+
+{% block contents %}
 <h1>Sign up</h1>
     <form action="/portfolio/signup/" method="post" class="message">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit">
     </form>
-    </div></div>
-</body>
-</html>
+{% endblock %}

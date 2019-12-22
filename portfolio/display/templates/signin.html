@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign in</title>
-    {% load static %}
-        <link rel="stylesheet" href="{% static "display/style.css" %}" type="text/css">
-</head>
-<body>
-<div id="contents"><div class="main">
-    {% if user.is_authenticated %}
-    <p align="right">Authenticated as <b><a href="portfolio/signout">{{ user.get_username }}</a></b>.</p>
-{% endif %}
+{% extends "base.html" %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block contents %}
 <h1>Sign in</h1>
     <form action="/portfolio/signin/" method="post" class="message">
     {% csrf_token %}
@@ -19,6 +11,4 @@
     </table>
     <input type="submit" value="Submit">
     </form>
-</div></div>
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/display/style.css" type="text/css"/>
+    <script src="/static/display/main.js"></script>
+    <title>{% block title %}Portfolio{% endblock %}</title>
+</head>
+
+<body>
+    <div id="sidebar">
+        {% block sidebar %}
+          <nav class="floating-menu">
+            <h3>Floating Menu</h3>
+            <a href="/portfolio/signup/">Sign up</a>
+            <a href="/portfolio/signin/">Sign in</a>
+            <a href="/portfolio/signout/">Sign out</a>
+            <a href="/portfolio/post_view/">View Posts</a>
+        </nav>
+        {% endblock %}
+    </div>
+
+    <div id="contents">
+        {% if user.is_authenticated %}
+        <p align="right">Authenticated as <b><a href="portfolio/signout">{{ user.get_username }}</a></b>.</p>
+        {% endif %}
+        <div class="main">
+        {% block contents %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

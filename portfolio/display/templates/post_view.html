@@ -1,19 +1,11 @@
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <title>Post_Show</title>
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'display/style.css' %}" type="text/css">
-         <script src="{% static 'display/main.js' %}"></script>
-    </head>
-    <body>
-    <div id="contents">
-        <div class="main">
-                    {% if user.is_authenticated %}
-            <p align="right">Authenticated as <b><a href="portfolio/signout">{{ user.get_username }}</a></b>.</p>
-{% endif %}
-    <h1>The Posts</h1>
-    <ul class="news"  id="posts">
+{% extends "base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block contents %}
+<h1>The Posts</h1>
+
+<ul class="news"  id="posts">
     {% for p in post %}
     <li id="{{p.id}}">
     <h2> {{ p.title }}</h2>
@@ -25,7 +17,7 @@
      {% if user.is_authenticated %}
         {% ifequal user p.author %}
         <form action="/portfolio/post_delete/" method="post" class="message" onsubmit="return confirm('Do you really want to delete post {{p.title}}?');">
-        {% csrf_token %}
+             {% csrf_token %}
              <input type="hidden" name="post_id" value="{{p.id}}">
              <input type="submit" value="Delete">
          </form>
@@ -34,9 +26,7 @@
     </li>
     {% endfor %}
     </ul>
-            <!--p id="demo"></p-->
-            <button type="button" id="loadPostsButton" onclick="loadPosts('{{ user.get_username }}')">Load More</button>
+    <!--p id="demo"></p-->
+    <button type="button" id="loadPostsButton" onclick="loadPosts('{{ user.get_username }}')">Load More</button>
 
-    </div> </div>
-    </body>
-    </html>
+{% endblock %}
