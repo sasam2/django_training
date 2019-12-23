@@ -149,7 +149,7 @@ img {
 #contents {
 	min-height: 510px;
 	width: 880px;
-	margin: 0 auto;
+/**	margin: 0 auto; **/
 	padding: 54px 40px;
 }
 
@@ -423,6 +423,9 @@ p a {
 	background-position: -40px -120px;
 }
 .floating-menu {
+    position: fixed;
+    top: 95px;
+    left: 668px;
     font-family: sans-serif;
     background: #818181;
     padding: 5px;;
@@ -431,6 +434,7 @@ p a {
     position: fixed;
     float: right;
   }
+
 .floating-menu a,
 .floating-menu h3 {
     font-size: 0.9em;
