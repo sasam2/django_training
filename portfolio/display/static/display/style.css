@@ -148,7 +148,7 @@ img {
 /*------------------------------ CONTENTS ------------------------------*/
 #contents {
 	min-height: 510px;
-	width: 880px;
+	width: 770px;
 /**	margin: 0 auto; **/
 	padding: 54px 40px;
 }
@@ -184,6 +184,7 @@ p a {
 	width: 400px;
 	margin: 0 20px;
 }
+
 #contents .features {
 	width: 810px;
 	margin: 0 auto;
@@ -353,8 +354,11 @@ p a {
 	padding: 0 10px;
 }
 
+.buttonHolder {
+    text-align: center;
+}
+
 .main button {
-	float: center;
 	background-color: #818181;
 	color: #d5d5d5;
 	cursor: pointer;
