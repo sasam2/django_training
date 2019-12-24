@@ -13,20 +13,22 @@
     <img src="{{ p.photo.url }}">
     {% endif %}
     <p> {{ p.content}}</p>
+    {% if user.is_authenticated %}
+    {% ifequal user p.author %}
+    <form action="/portfolio/post_delete/" method="post" class="message" onsubmit="return confirm('Do you really want to delete post {{p.title}}?');">
+        <input type="submit" value="Delete">
+        {% csrf_token %}
+        <input type="hidden" name="post_id" value="{{p.id}}">
+
+    </form>
+    {% endifequal %}
+    {% endif %}
     <p><b> {{ p.author.get_username }}</b> on {{ p.date|date:"Y-m-d, H:i:s" }}</p>
-     {% if user.is_authenticated %}
-        {% ifequal user p.author %}
-        <form action="/portfolio/post_delete/" method="post" class="message" onsubmit="return confirm('Do you really want to delete post {{p.title}}?');">
-             {% csrf_token %}
-             <input type="hidden" name="post_id" value="{{p.id}}">
-             <input type="submit" value="Delete">
-         </form>
-        {% endifequal %}
-     {% endif %}
     </li>
     {% endfor %}
     </ul>
     <!--p id="demo"></p-->
-    <button type="button" id="loadPostsButton" onclick="loadPosts('{{ user.get_username }}')">Load More</button>
-
+    <div class="buttonHolder">
+        <button type="button" id="loadPostsButton" onclick="loadPosts('{{ user.get_username }}')">Load More</button>
+    </div>
 {% endblock %}
